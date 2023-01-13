@@ -1,8 +1,16 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 
 export default function Home() {
-    const [users,setUsers]=useState
+    const [users,setUsers]=useState([])
+    useEffect(()=>{
+        loadUsers
+    },[]);
+
+    const loadUsers=async()=>{
+        const result = await axios.get("localhost:8080/api/assets/get");
+        console.log(result.data);
+    };
 
     return (
         <div className='container'>
