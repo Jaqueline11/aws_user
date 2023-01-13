@@ -10,6 +10,7 @@ export default function Home() {
     const loadUsers=async()=>{
         const result = await axios.get("localhost:8080/api/assets/get");
         console.log(result.data);
+        console("Myrian")
     };
 
     return (
