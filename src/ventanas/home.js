@@ -9,7 +9,7 @@ export default function Home() {
         loadUsers();
     },[])
 
-    const loadUsers=async()=>{       const result = await axios.get("http://localhost:8080/api/assets/get-string");
+    const loadUsers=async()=>{       const result = await axios.get("http://localhost:8080/api/cursos/getcurso");
         console.log("F")
         setUsers(result.data);
     };
@@ -23,7 +23,7 @@ export default function Home() {
                             <th scope="col">#</th>
                             <th scope="col">Usuario</th>
                             <th scope="col">Contraseña</th>
-                            <th scope="col">Handle</th>
+                            <th scope="col">Url imagen</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -31,8 +31,8 @@ export default function Home() {
                             users.map((user,index)=>(
                                 <tr>
                                 <th scope="row" key={index}>{index+1}</th>
-                                <td>{user.titulo}</td>
-                                <td>{user.imagenPath}</td>
+                                <td>{user.usuario}</td>
+                                <td>{user.contrasena}</td>
                                 <td>{user.imagenUrl}</td>
                             </tr>
                             ))
