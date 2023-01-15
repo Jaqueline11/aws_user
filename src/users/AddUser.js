@@ -1,18 +1,20 @@
-import { Type } from '@sinclair/typebox'
 import axios from 'axios'
-import { Button } from 'bootstrap'
 import React from 'react'
 import { useState } from 'react'
+import { Link,useNavigate} from 'react-router-dom'
 
 export default function AddUser() {
 
+  let navigate=useNavigate();
+
+
   const [user, setUser] = useState({
-    name: "",
+    usuario: "",
     contrasena: "",
     foto: ""
   })
 
-  const { name, contrasena, foto } = user;
+  const { usuario, contrasena, foto } = user;
 
   const onInputChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
@@ -24,9 +26,8 @@ export default function AddUser() {
     setImage(e.target.files[0])
   };
 
+
   function handleApi() {
-
-
     var formData = new FormData();
     formData.append("foto", image);
     axios.post("http://localhost:8080/api/assets/upload", formData, {
@@ -38,8 +39,10 @@ export default function AddUser() {
     })
 
     .then(({data}) => {
-      const { key, url } = data;
-      console.log(url);
+      const { key } = data;
+      console.log(key);
+      setUser({ ...user, foto: key }); 
+
     })
     .catch(error => {
       console.log(error);
@@ -48,20 +51,33 @@ export default function AddUser() {
    
 
   }
+
+  const registrar= async (e)=>{
+    e.preventDefault();
+    await axios.post("http://localhost:8080/api/cursos/crearcurso",user)
+    .then(response => {
+      console.log(response);
+    })
+    .catch(error => {
+      console.log(error);
+    });
+    navigate("/")
+  }
+
   return (
     <div className="container">
       <div className="row">
         <div className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow">
           <h2 className="text-center m-4"> Registro de Usuario</h2>
-          
+          <form onSubmit={(e)=>registrar(e)}>
           <div className="mb-3">
             <br></br>
             <input
               type={"text"}
               className="form-control"
               placeholder="Ingrese su usuario"
-              name="name"
-              value={name}
+              name="usuario"
+              value={usuario}
               onChange={(e) => onInputChange(e)}
             >
             </input>
@@ -83,15 +99,16 @@ export default function AddUser() {
 
           </div>
           <br></br>
-          <button type="submit" className="btn btn-outline-primary" onClick={handleApi} value={foto}>
+          <button type="submit" className="btn btn-outline-primary" onClick={handleApi} >
             Registrar
           </button>
 
-          <button type="submit" className="btn btn-outline-danger mx-2">
-            Cancelar
-          </button>
-
           
+          <Link
+            className="btn btn-outline-danger mx-2" to>
+            Cancelar
+            </Link>
+          </form>
         </div>
 
       </div>
