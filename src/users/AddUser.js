@@ -7,15 +7,15 @@ import { useState } from 'react'
 export default function AddUser() {
 
   const [user, setUser] = useState({
-    usuario: "",
+    name: "",
     contrasena: "",
     foto: ""
   })
 
-  const { usuario, contrasena, foto } = user;
+  const { name, contrasena, foto } = user;
 
   const onInputChange = (e) => {
-    setUser({ ...user, [e.target.usuario]: e.target.value });
+    setUser({ ...user, [e.target.name]: e.target.value });
   };
 
   const [image, setImage] = useState(null)
@@ -29,13 +29,23 @@ export default function AddUser() {
 
     var formData = new FormData();
     formData.append("foto", image);
-    var results = axios.post("http://localhost:8080/api/assets/upload", formData, {
-
+    axios.post("http://localhost:8080/api/assets/upload", formData, {
+      
       headers: {
         'Content-Type': 'multipart/form-data'
       }
+      
     })
-    console.log(results)
+
+    .then(({data}) => {
+      const { key, url } = data;
+      console.log(url);
+    })
+    .catch(error => {
+      console.log(error);
+    })
+
+   
 
   }
   return (
@@ -43,15 +53,15 @@ export default function AddUser() {
       <div className="row">
         <div className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow">
           <h2 className="text-center m-4"> Registro de Usuario</h2>
-          <form>
+          
           <div className="mb-3">
             <br></br>
             <input
               type={"text"}
               className="form-control"
               placeholder="Ingrese su usuario"
-              name="usuario"
-              value={usuario}
+              name="name"
+              value={name}
               onChange={(e) => onInputChange(e)}
             >
             </input>
@@ -81,7 +91,7 @@ export default function AddUser() {
             Cancelar
           </button>
 
-          </form>
+          
         </div>
 
       </div>
