@@ -123,6 +123,8 @@ export default function AddUser() {
               className="btn btn-outline-danger mx-2" to onClick={handleApi}  >
               Guardar Imagen
             </Link>
+            <br></br><br></br>
+          <Link to="/">Cancelar</Link>
 
 
           </form>
