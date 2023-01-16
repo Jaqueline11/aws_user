@@ -16,23 +16,7 @@ export default function Home() {
     };
 
 
-    axios.get('http://localhost:8080/api/cursos/validarLogin', {
-        params: {
-            usuario: "christi",
-            contrasena: "1234"
-        }
-    })
-        .then(response => {
-            console.log(response.data);
-            if(response.data== true){
-                console.log("Inicio de sesion exitoso")
-            }else{
-                console.log("Inicio de sesion fallido")
-            }
-        })
-        .catch(error => {
-            console.log(error);
-        });
+    
 
 
 
