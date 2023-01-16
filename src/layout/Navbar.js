@@ -23,7 +23,7 @@ export default function Navbar
                             className="navbar-toggler-icon"></span>
                     </button>
                     <Link className="btn btn-outline-light" to="/adduser">Agregar Usuario</Link>
-                    <Link className="btn btn-outline-light" to="/viewuser">Inicio Secion</Link>
+                    <Link className="btn btn-outline-light" to="/viewuser">Inicio Sesión</Link>
                 </div>
             </nav>
         </div>
