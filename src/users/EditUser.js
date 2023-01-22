@@ -3,13 +3,14 @@ import React, { useEffect } from 'react'
 import { useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 
+
 export default function EditUser() {
 
 
   let navigate = useNavigate();
   const [showConfirm, setShowConfirm] = useState(false);
 
-
+  
   const [user, setUser] = useState({
     usuario: "",
     contrasena: "",
@@ -61,10 +62,19 @@ export default function EditUser() {
   }
 
   const { id } = useParams();
+  const {imagenUrl}=useParams();
 
   useEffect(() => {
+    
     CargarDatos();
+    
   }, []);
+
+  
+
+  
+  
+
 
   const registrar = async (e) => {
 
@@ -86,15 +96,20 @@ export default function EditUser() {
     }
 
   }
+  
 
 
-
+  
   const CargarDatos = async () => {
     const result = await axios.get(`http://localhost:8080/api/cursos/modificausuario/${id}`);
     setUser({
-      ...result.data,
-      imagenPath: result.data.imagenPath ? result.data.imagenPath : 'path/to/default/image'});
+      ...result.data});
+      
+      
   };
+  var urlimagen;
+  urlimagen= "https://proyectospringboots3bucket.s3.amazonaws.com/"+user.imagenPath;
+      
 
   return (
     <div className="container">
@@ -126,7 +141,9 @@ export default function EditUser() {
               </input>
             </div>
             <div>
-              <img src={user.imagenPath} alt="Mi imagen" width="150px" />
+              
+            <img src={urlimagen} alt="Mi imagen" width="150px" />
+             
             </div>
             <br></br>
 

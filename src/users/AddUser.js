@@ -77,7 +77,12 @@ export default function AddUser() {
       console.log(user)
     }
 
+    
+
   }
+  var urlimagen;
+  urlimagen= "https://proyectospringboots3bucket.s3.amazonaws.com/"+user.imagenPath;
+      
 
   return (
     <div className="container">
@@ -109,6 +114,7 @@ export default function AddUser() {
               </input>
             </div>
             <br></br>
+            <img src={urlimagen} alt="Mi imagen" width="150px" />
             <div>
               <input type="file" name='file' onChange={handleImage}></input>
 
@@ -126,7 +132,7 @@ export default function AddUser() {
             <br></br><br></br>
           <Link to="/">Cancelar</Link>
 
-
+          
           </form>
         </div>
 
