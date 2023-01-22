@@ -32,7 +32,7 @@ export default function ViewUser() {
             console.log(response.data);
             if(response.data== true){
                 console.log("Inicio de sesion exitoso")
-                navigate("/edituser")
+                navigate("/bienvenido")
             }else{
                 console.log("Inicio de sesion fallido")
                 setError('La combinación de correo electrónico y contraseña no es válida: ' + usuario + ' ' + contrasena);
