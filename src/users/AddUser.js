@@ -7,6 +7,7 @@ export default function AddUser() {
 
   let navigate = useNavigate();
   const [showConfirm, setShowConfirm] = useState(false);
+  const [error, setError] = useState(null);
 
 
   const [user, setUser] = useState({
@@ -60,12 +61,31 @@ export default function AddUser() {
 
 
   const registrar = async (e) => {
-    
+    e.preventDefault();
+    var val;
+    await axios.get('http://localhost:8080/api/cursos/validarusuario', {
+      params: {
+        usuario: user.usuario,
 
-    if (window.confirm('¿Estas seguro que quieres registrar el usuario?')) {
-      e.preventDefault();
+      }
+    })
+      .then(response => {
+        console.log(response.data);
+        if (response.data == true) {
+          val = response.data;
+          setError('El nombre de usuario ya existe');
+        } else {
+          val = response.data;
+        }
 
-      await axios.post("http://localhost:8080/api/cursos/crearcurso", user)
+      })
+    if (val == false) {
+      
+      if(!user.usuario || !user.contrasena || !user.imagenPath){
+        setError('Rellene todos los campos');
+      }else{
+        
+        await axios.post("http://localhost:8080/api/cursos/crearcurso", user)
         .then(response => {
           console.log(response);
         })
@@ -73,16 +93,14 @@ export default function AddUser() {
           console.log(error);
         });
       navigate("/")
-    } else {
-      console.log(user)
+      }
+      
     }
-
-    
 
   }
   var urlimagen;
-  urlimagen= "https://proyectospringboots3bucket.s3.amazonaws.com/"+user.imagenPath;
-      
+  urlimagen = "https://proyectospringboots3bucket.s3.amazonaws.com/" + user.imagenPath;
+
 
   return (
     <div className="container">
@@ -90,6 +108,8 @@ export default function AddUser() {
         <div className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow">
           <h2 className="text-center m-4"> Registro de Usuario</h2>
           <form onSubmit={(e) => registrar(e)}>
+            {error && <p>{error} </p>}
+
             <div className="mb-3">
               <br></br>
               <input
@@ -130,9 +150,9 @@ export default function AddUser() {
               Guardar Imagen
             </Link>
             <br></br><br></br>
-          <Link to="/">Cancelar</Link>
+            <Link to="/">Cancelar</Link>
 
-          
+
           </form>
         </div>
 
